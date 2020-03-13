@@ -1,0 +1,25 @@
+import { Meta, Story, Preview } from '@storybook/addon-docs/blocks';
+import { SignUpModal } from './Modals';
+import { action } from '@storybook/addon-actions';
+import { boolean } from "@storybook/addon-knobs";
+
+
+<Meta title="Design System|Modals" component={SignUpModal} />
+
+# Modals
+
+Buttons are used to trigger actions within an application.
+
+## Usage
+
+Buttons are used to trigger internal actions within your web applications.
+
+## Sign Up Modal
+
+Primary buttons are used as a call to action and indicate the most important action on a page.
+
+<Preview withToolbar>
+    <Story name="sign up">
+        <SignUpModal showModal={boolean("Show Modal", true)} setShowModal={action('closed modal')}>Hello world</SignUpModal>
+    </Story>
+</Preview>

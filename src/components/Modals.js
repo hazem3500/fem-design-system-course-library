@@ -2,7 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import { typeScale } from '../utils';
 import { PrimaryButton } from './Buttons';
-import { Illustrations, CloseIcon } from "../assets";
+import { Illustrations, CloseIcon } from '../assets';
+import { animated, useSpring } from 'react-spring';
 
 const ModalWrapper = styled.div`
     width: 800px;
@@ -30,31 +31,41 @@ const SignUpText = styled.p`
 `;
 
 const CloseModalButton = styled.button`
-  cursor: pointer;
-  background: none;
-  border: none;
-  position: absolute;
-  top: 40px;
-  right: 40px;
-  width: 24px;
-  height: 24px;
-  padding: 0;
+    cursor: pointer;
+    background: none;
+    border: none;
+    position: absolute;
+    top: 40px;
+    right: 40px;
+    width: 24px;
+    height: 24px;
+    padding: 0;
 `;
 
-export const SignUpModal = () => {
+export const SignUpModal = ({ showModal, setShowModal }) => {
+    const animation = useSpring({
+        opacity: showModal ? 1 : 0,
+        transform: showModal ? 'translateY(0%)' : 'translateY(50%)'
+    });
     return (
-        <ModalWrapper>
-            <img src={Illustrations.SignUp} alt="Sign up for an account!" />
-            <SignUpHeader>Sign Up</SignUpHeader>
-            <SignUpText>
-                Sign up today to get access to all of our content and features!
-            </SignUpText>
-            <PrimaryButton onClick={() => console.log('You signed up!')}>
-                Sign Up
-            </PrimaryButton>
-            <CloseModalButton aria-label="Close modal" onClick={() => console.log("You closed the modal!")}>
-            <CloseIcon />
-            </CloseModalButton>
-        </ModalWrapper>
+        <animated.div style={animation}>
+            <ModalWrapper>
+                <img src={Illustrations.SignUp} alt="Sign up for an account!" />
+                <SignUpHeader>Sign Up</SignUpHeader>
+                <SignUpText>
+                    Sign up today to get access to all of our content and
+                    features!
+                </SignUpText>
+                <PrimaryButton onClick={() => console.log('You signed up!')}>
+                    Sign Up
+                </PrimaryButton>
+                <CloseModalButton
+                    aria-label="Close modal"
+                    onClick={() => setShowModal(false)}
+                >
+                    <CloseIcon />
+                </CloseModalButton>
+            </ModalWrapper>
+        </animated.div>
     );
 };
